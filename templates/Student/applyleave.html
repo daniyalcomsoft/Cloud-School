@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="content container-fluid">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="page-title">Apply Leave</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item active">Apply Leave</li>
+          </ul>
+        </div>
+        <div class="col-auto text-right float-right ml-auto">
+          <button type='button' data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-outline-primary mr-2"><i class="fas fa-pray"></i> Leave History</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{% url 'std_leave_save' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Apply Leave</span></h5>
+                        </div>
+                       {% include 'includes/messages.html' %}
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Leave Date</label>
+                                <input type="date" class="form-control" name="leave_date" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                              <label>Leave Message</label>
+                              <textarea class="form-control" style="height:250px" name="leave_message" required></textarea>
+                            </div>
+                          </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Apply Leave</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Leave History</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="card card-table">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table id="table_id" class="table table-hover table-center mb-0">
+                          <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Message</th>
+                              <th class="text-right">Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for i in stdleavehistory %}
+                            <tr>
+                              <td>{{i.date}}</td>
+                              <td>{{i.message}}</td>
+                              <td class="text-right">
+                                <div class="actions">
+                                  {% if i.status == 0 %}
+                                    <span class="badge badge-info"> Pending</span>
+                                  {% elif i.status == 1 %}
+                                  <span class="badge badge-info"> Accepted</span>
+                                  {% else %}
+                                  <span class="badge badge-danger"> Rejected</span>
+                                  {% endif %}
+                                </div>
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+      
+    </div>
+  </div>
+</div>
+{% endblock %}

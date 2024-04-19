@@ -1,0 +1,140 @@
+<script>
+  "use strict";
+
+  $(document).ready(function () {
+    // Area chart
+
+    var options = {
+      series: [{{student_count}}, {{staff_count}}, {{subject_count}}, {{course_count}}],
+      chart: {
+        width: 380,
+        type: "pie",
+      },
+      labels: ["Students", "Staff", "Subject", "Course"],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200,
+            },
+            legend: {
+              position: "bottom",
+            },
+          },
+        },
+      ],
+    };
+
+    var chart = new ApexCharts(document.querySelector("#all_details"), options);
+    chart.render();
+    // Bar chart
+  });
+
+
+
+  // for students male and female
+  var options = {
+    series: [44, 55, 41, 17, 15],
+    chart: {
+    type: 'donut',
+  },
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      chart: {
+        width: 200
+      },
+      legend: {
+        position: 'bottom'
+      }
+    }
+  }]
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+</script>
+
+{% comment %}
+<script>
+  if ($("#bar").length > 0) {
+      var optionsBar = {
+        chart: {
+          type: "bar",
+          height: 350,
+          width: "100%",
+          stacked: true,
+          toolbar: {
+            show: false,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        plotOptions: {
+          bar: {
+            columnWidth: "45%",
+          },
+        },
+        series: [
+          {
+            name: "Boys",
+            color: "#fdbb38",
+            data: [
+            {{stud_gender_male}}
+            ],
+          },
+          {
+            name: "Girls",
+            color: "#19affb",
+            data: [
+            {{stud_gender_female}}
+            ],
+          },
+        ],
+        labels: [
+          2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,
+          2020,
+        ],
+        xaxis: {
+          labels: {
+            show: false,
+          },
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+        },
+        yaxis: {
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            style: {
+              colors: "#777",
+            },
+          },
+        },
+        title: {
+          text: "",
+          align: "left",
+          style: {
+            fontSize: "18px",
+          },
+        },
+      };
+
+      var chartBar = new ApexCharts(
+        document.querySelector("#bar"),
+        optionsBar
+      );
+      chartBar.render();
+    }
+</script>
+{% endcomment %}
